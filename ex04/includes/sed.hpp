@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
 
 bool		read_file(const std::string& path, std::string& out);
 bool		write_file(const std::string& path, const std::string& data);
