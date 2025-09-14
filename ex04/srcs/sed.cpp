@@ -1,15 +1,17 @@
 #include "sed.hpp"
 
 bool	read_file(const std::string& path, std::string& out) {
-	std::ifstream ifs(path.c_str(), std::ios::in | std::ios::binary);
+	std::ifstream ifs(path.c_str(), std::ios::in);
 	if (!ifs)
 		return false;
-	std::ostringstream oss; oss << ifs.rdbuf(); out = oss.str();
+	std::ostringstream oss; 
+	oss << ifs.rdbuf(); 
+	out = oss.str();
 	return true;
 }
 
 bool write_file(const std::string& path, const std::string& data) {
-    std::ofstream ofs(path.c_str(), std::ios::out | std::ios::binary | std::ios::trunc);
+    std::ofstream ofs(path.c_str(), std::ios::out | std::ios::trunc);
     if (!ofs) {
         return false;
     }
@@ -23,7 +25,8 @@ std::string replace_all(const std::string& text,
 {
 	if (s1.empty())
 		return text;
-	std::string res; res.reserve(text.size());
+	std::string res; 
+	res.reserve(text.size()); // big opti donc commentaire (ca permet de reserver un tampon de x caracteres pour la string)
 	std::string::size_type start = 0;
 	while (true) {
 		std::string::size_type pos = text.find(s1, start);
@@ -31,7 +34,7 @@ std::string replace_all(const std::string& text,
 			res.append(text, start, std::string::npos);
 			break;
 		}
-		res.append(text, start, pos - start);
+		res.append(text, start, pos - start); // comme le += mais plus clean donc c'est fine
 		res.append(s2);
 		start = pos + s1.size();
 	}
